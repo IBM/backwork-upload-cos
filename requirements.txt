@@ -1,0 +1,9 @@
+docutils==0.14
+ibm-cos-sdk==2.4.4
+ibm-cos-sdk-core==2.4.4
+ibm-cos-sdk-s3transfer==2.4.4
+jmespath==0.9.4
+-e git+ssh://git@github.ibm.com/apset/monsoon@54d2acd01ec6379923161abadb84d027dace9ef9#egg=monsoon_cli
+python-dateutil==2.8.0
+six==1.12.0
+urllib3==1.24.3
