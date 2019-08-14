@@ -44,13 +44,13 @@ class CloudObjectStorageUpload(object):  # pylint: disable=unused-variable
         cos_oo_parser.add_argument(
             "-e", "--endpoint-url", help="endpoint URL of the S3 storage"
         )
-        cos_oo_parser.add_argument("-s", "--instance-id", help="service instance id")
+        cos_oo_parser.add_argument(
+            "-s", "--instance-id", help="service instance id")
         cos_oo_parser.add_argument(
             "-u", "--access-key", help="acccess key id of HMAC credentials"
         )
         cos_oo_parser.add_argument(
-            "-p", "--secret-key", help="secret access key of HMAC credentials"
-        )
+            "-p", "--secret-key", help="secret access key of HMAC credentials")
         cos_oo_parser.add_argument(
             "local_path",
             nargs="?",
@@ -93,3 +93,78 @@ class CloudObjectStorageUpload(object):  # pylint: disable=unused-variable
             LOG.info("upload complete")
         else:
             LOG.info("file does not exist")
+
+
+class CloudObjectStorageDownload(object):  # pylint: disable=unused-variable
+    """Download a file from Cloud Object Storage."""
+
+    command = "cos"
+
+    def __init__(self, args, extra):
+        self.args = args
+        self.extra = extra
+        self.session = ibm_boto3.session.Session(
+            aws_access_key_id=args.access_key,
+            aws_secret_access_key=args.secret_key,
+            ibm_service_instance_id=args.instance_id,
+        )
+        self.client = self.session.client("s3", endpoint_url=args.endpoint_url)
+        self.s3 = self.session.resource("s3", endpoint_url=args.endpoint_url)
+        self.cos = ibm_boto3.resource(
+            "s3",
+            aws_access_key_id=args.access_key,
+            aws_secret_access_key=args.secret_key,
+            ibm_service_instance_id=args.instance_id,
+            endpoint_url=args.endpoint_url,
+        )
+
+    def path_leaf(self, path):
+        head, tail = ntpath.split(path)
+        return tail or ntpath.basename(head)
+
+    @classmethod
+    def parse_args(cls, subparsers):
+        """Add Cloud Object Storage arguments to command line parser."""
+        cos_oo_parser = subparsers.add_parser("cos", description=cls.__doc__)
+
+        cos_oo_parser.add_argument(
+            "-e", "--endpoint-url", help="endpoint URL of the S3 storage"
+        )
+        cos_oo_parser.add_argument(
+            "-s", "--instance-id", help="service instance id")
+        cos_oo_parser.add_argument(
+            "-u", "--access-key", help="acccess key id of HMAC credentials"
+        )
+        cos_oo_parser.add_argument(
+            "-p", "--secret-key", help="secret access key of HMAC credentials"
+        )
+
+        cos_oo_parser.add_argument(
+            "remote_path",
+            help="""Cloud object storage path/prefix to the object
+                                  being downloaded""",
+        )
+        cos_oo_parser.add_argument("bucket", help="target s3 bucket")
+        cos_oo_parser.add_argument(
+            "local_path",
+            nargs="?",
+            default=None,
+            help="path to save the file to on the local filesystem",
+        )
+
+    def download(self):
+        """Download a file from `remote_path` to `local_path` on ObjectStorage."""
+
+        LOG.info("Downloading 's3://%s/%s' from '%s' from Cloud Object Storage to '%s'",
+                 self.args.bucket,
+                 self.args.remote_path,
+                 self.args.endpoint_url,
+                 os.path.abspath(self.args.local_path))
+
+        bucket = self.s3.Bucket(self.args.bucket)
+        bucket.download_file(
+            self.args.remote_path,
+            os.path.abspath(self.args.local_path)
+        )
+
+        LOG.info("Download complete.")
