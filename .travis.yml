@@ -13,4 +13,4 @@ deploy:
       secure: BsOzSyMAbDMJziE3U5QzVbGQ7ePPEPl5BfdetXkidahIsTPob5clbTur+6/QnalzWie2DG+dmlw9D+wf5AFgCjhYOV4kPwzu8N9sHVC0TE3b4sfHmKtXrRmzYzZxXhk2GLZMOF1GeqKyN/WMOBquIq+wvGOgGcIePcxuSePwMBPqV155uQPc/VpB+9j4AT5/QWJzrEkzQ0PCzWNSqF9hk+DUtNqf0ybsL7gyjf9S2UFWvYx/kiFaYyjRFLupGylO2Qg8p8eHY2+B8l2+NYF4gr5q/FDuEoWUmdtng9K8d754H+SBwzQ0DdEZjoJ3T9zqOdJsFRiuOY9w15fbYf5SQqwk7jfHHR25ojqirqiTvRx6roX0QWFLRuJ7pRIaHpQOyTmJ1IXDnZAxjPpMJm5+TSPeeBBGcjFSxMwZAiz85ZpLVeCXyh3sS9eQVXHx/MbIU1ciZZT4z/ldbRojOIzteTcbG2tfSybAKw2nvvp4S8/H4BgFjU3qoyRhOGF9dCu6i5jE6OKm5LdYP6kSgxp6OavehhBnWuA5L61bVxVag0LhL9FiZG8BZSeKXAG5/2Dzy98fIfb21shyAJDAESVT4WzdAQXMe9e1JW5Z5w//aPKMxRb3diOF5dOHMTOZ14P+5ivgmqC7VD0fljMqodAqoUrxjqnaAd/AWmHRITn41Zw=
     on:
       tags: true
-      repo: IBM/backwork
+      repo: IBM/backwork-upload-cos
