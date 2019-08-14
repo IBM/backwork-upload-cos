@@ -1,13 +1,13 @@
-# monsoon-upload-cos
+# backwork-upload-cos [![Build Status](https://travis-ci.org/IBM/backwork-upload-cos.svg?branch=master)](https://travis-ci.org/IBM/backwork-upload-cos) [![PyPI version](https://badge.fury.io/py/backwork-upload-cos.svg)](https://badge.fury.io/py/backwork-upload-cos)
 
-Add support for IBM Cloud Object Storage uploads on [`monsoon`](https://github.ibm.com/apset/monsoon).
+Add support for IBM Cloud Object Storage uploads to [`backwork`](https://github.com/IBM/backwork).
 
 ## Installing
 
-You can use `pip` to install this plug-in directly from GHE:
+You can use `pip` to install this plug-in:
 
 ```sh
-$ pip install git+ssh://git@github.ibm.com/apset/monsoon-upload-cos
+$ pip install backwork-upload-cos
 ```
 
 Or you can use `pip` to install from Pypi repository at Artifactory
@@ -20,17 +20,17 @@ extra-index-url = https://<email>:<api_token>@<pypi_repository_url>
 ```
 
 ```sh
-$ pip install monsoon-upload-cos
+$ pip install backwork-upload-cos
 ```
 
 ## Using
 
 After installing the plug-in you will be able to use the `upload cos`
-command on `monsoon`.
+command on `backwork`.
 
 ```sh
-$ monsoon upload cos --help
-usage: monsoon upload cos [-h] [-e ENDPOINT_URL] [-s INSTANCE_ID]
+$ backwork upload cos --help
+usage: backwork upload cos [-h] [-e ENDPOINT_URL] [-s INSTANCE_ID]
                           [-u ACCESS_KEY] [-p SECRET_KEY]
                           [local_path] bucket remote_path
 

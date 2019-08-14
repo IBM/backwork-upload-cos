@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0][] - 2019-08-14
+
+### Changed
+
+- Changed package name to `backwork-upload-cos`
+
 ## [0.1.0][] - 2019-05-24
 
 ### Added
 
 - Initial release
 
-[unreleased]: https://github.ibm.com/apset/monsoon-upload-softlayer/compare/0.1.0...HEAD
-[0.1.0]: https://github.ibm.com/apset/monsoon-upload-softlayer/compare/0.1.0...HEAD
+[unreleased]: https://github.ibm.com/apset/backwork-upload-softlayer/compare/0.1.0...HEAD
+[0.1.0]: https://github.ibm.com/apset/backwork-upload-softlayer/compare/0.1.0...HEAD

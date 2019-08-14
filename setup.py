@@ -12,7 +12,7 @@ with open(path.join(HERE, 'README.md')) as f:
 
 setup(
     name="backwork-upload-cos",
-    version="0.1.0",
+    version="0.2.0",
     description="Backwork plug-in for IBM Cloud Object Storage uploads.",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
@@ -37,7 +37,7 @@ setup(
         "ibm-cos-sdk>=2.4.4"
     ],
     entry_points={
-        "monsoon.uploads": [
+        "backwork.uploads": [
             "cos=cos:CloudObjectStorageUpload"
         ]
     }
