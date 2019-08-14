@@ -11,27 +11,29 @@ with open(path.join(HERE, 'README.md')) as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
-    name="monsoon-upload-cos",
+    name="backwork-upload-cos",
     version="0.1.0",
-    description="Monsoon plug-in for IBM Cloud Object Storage uploads.",
+    description="Backwork plug-in for IBM Cloud Object Storage uploads.",
     long_description=LONG_DESCRIPTION,
-    url="https://github.ibm.com/apset/monsoon",
+    long_description_content_type="text/markdown",
+    url="https://github.com/IBM/backwork-upload-cos",
     author="Michael Lin",
     author_email="michael.lin1@ibm.com",
-    license="IBM",
+    license="Apache 2",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "Intended Audience :: System Administrators",
         "Operating System :: POSIX :: Linux",
+        'License :: OSI Approved :: Apache Software License',
         "Topic :: Database",
         "Topic :: System :: Archiving :: Backup",
         "Topic :: Utilities"
     ],
     packages=find_packages(),
     install_requires=[
-        "monsoon-cli>=0.1.7",
+        "backwork",
         "ibm-cos-sdk>=2.4.4"
     ],
     entry_points={
