@@ -5,6 +5,7 @@ from ibm_botocore.client import Config, ClientError
 
 import os
 import ntpath
+import json
 
 LOG = logging.getLogger(__name__)
 
@@ -93,6 +94,90 @@ class CloudObjectStorageUpload(object):  # pylint: disable=unused-variable
             LOG.info("upload complete")
         else:
             LOG.info("file does not exist")
+
+
+class CloudObjectStorageShow(object):  # pylint: disable=unused-variable
+    """List available backups in Cloud Object Storage."""
+
+    command = "cos"
+
+    def __init__(self, args, extra):
+        self.args = args
+        self.extra = extra
+        self.session = ibm_boto3.session.Session(
+            aws_access_key_id=args.access_key,
+            aws_secret_access_key=args.secret_key,
+            ibm_service_instance_id=args.instance_id,
+        )
+        self.client = self.session.client("s3", endpoint_url=args.endpoint_url)
+        self.s3 = self.session.resource("s3", endpoint_url=args.endpoint_url)
+        self.cos = ibm_boto3.resource(
+            "s3",
+            aws_access_key_id=args.access_key,
+            aws_secret_access_key=args.secret_key,
+            ibm_service_instance_id=args.instance_id,
+            endpoint_url=args.endpoint_url,
+        )
+
+    @classmethod
+    def parse_args(cls, subparsers):
+        """Add Cloud Object Storage arguments to command line parser."""
+        cos_oo_parser = subparsers.add_parser("cos", description=cls.__doc__)
+
+        cos_oo_parser.add_argument(
+            "-e", "--endpoint-url", help="endpoint URL of the S3 storage"
+        )
+        cos_oo_parser.add_argument(
+            "-s", "--instance-id", help="service instance id")
+        cos_oo_parser.add_argument(
+            "-u", "--access-key", help="acccess key id of HMAC credentials"
+        )
+        cos_oo_parser.add_argument(
+            "-p", "--secret-key", help="secret access key of HMAC credentials"
+        )
+        cos_oo_parser.add_argument(
+            "-l", "--limit", help="max number of results to return")
+        cos_oo_parser.add_argument(
+            "--sort-last-modified", default=True, action="store_const", const=sum, help="if passed, sorts results from most to least recent"
+        )
+
+        cos_oo_parser.add_argument("bucket", help="target s3 bucket")
+
+        cos_oo_parser.add_argument(
+            "path",
+            help="""Path/prefix to the look for backups in""",
+        )
+
+    def show(self):
+        """Show backups that are available on a given remote path / prefix on Object Storage."""
+
+        backup_objects = self.client.list_objects(
+            Bucket=self.args.bucket,
+            Prefix=self.args.path
+        )["Contents"]
+
+        if self.args.sort_last_modified:
+            def get_last_modified(obj):
+                return int(
+                    obj['LastModified'].strftime('%s'))
+            backups = [backup['Key']
+                       for backup in sorted(backup_objects, key=get_last_modified, reverse=True)]
+
+        # remove prefix/path from backup name
+        if self.args.path:
+            backups = [backup.split(self.args.path, 1)[-1]
+                       for backup in backups]
+
+        # remove leading/trailing /
+        backups = [backup.strip('/') for backup in backups]
+
+        # remove any results that are empty / just the prefix
+        backups = [backup for backup in backups if backup != ""]
+
+        # can't use s3 MaxKeys param because we want to sort before we limit
+        if self.args.limit:
+            backups = backups[0:int(self.args.limit)]
+        print(json.dumps({'backups': backups}))
 
 
 class CloudObjectStorageDownload(object):  # pylint: disable=unused-variable

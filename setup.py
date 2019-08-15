@@ -40,6 +40,9 @@ setup(
         "backwork.uploads": [
             "cos=cos:CloudObjectStorageUpload"
         ],
+        "backwork.shows": [
+            "cos=cos:CloudObjectStorageShow"
+        ],
         "backwork.downloads": [
             "cos=cos:CloudObjectStorageDownload"
         ]
