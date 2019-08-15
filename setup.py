@@ -39,6 +39,9 @@ setup(
     entry_points={
         "backwork.uploads": [
             "cos=cos:CloudObjectStorageUpload"
+        ],
+        "backwork.downloads": [
+            "cos=cos:CloudObjectStorageDownload"
         ]
     }
 )

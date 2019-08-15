@@ -12,8 +12,8 @@ $ pip install backwork-upload-cos
 
 ## Using
 
-After installing the plug-in you will be able to use the `upload cos`
-command on `backwork`.
+After installing the plug-in you will be able to use the `upload cos` and `download cos`
+commands on `backwork`.
 
 ```sh
 $ backwork upload cos --help
@@ -41,6 +41,33 @@ optional arguments:
   -p SECRET_KEY, --secret-key SECRET_KEY
                         secret access key of HMAC credentials
 ```
+
+```sh
+$ backwork download cos --help
+usage: backwork download cos [-h] [-e ENDPOINT_URL] [-s INSTANCE_ID]
+                             [-u ACCESS_KEY] [-p SECRET_KEY]
+                             remote_path bucket [local_path]
+
+Download a file from Cloud Object Storage.
+
+positional arguments:
+  remote_path           Cloud object storage path/prefix to the object being
+                        downloaded
+  bucket                target s3 bucket
+  local_path            path to save the file to on the local filesystem
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e ENDPOINT_URL, --endpoint-url ENDPOINT_URL
+                        endpoint URL of the S3 storage
+  -s INSTANCE_ID, --instance-id INSTANCE_ID
+                        service instance id
+  -u ACCESS_KEY, --access-key ACCESS_KEY
+                        acccess key id of HMAC credentials
+  -p SECRET_KEY, --secret-key SECRET_KEY
+                        secret access key of HMAC credentials
+```
+
 
 ## Author
 
