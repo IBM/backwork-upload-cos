@@ -12,8 +12,10 @@ $ pip install backwork-upload-cos
 
 ## Using
 
-After installing the plug-in you will be able to use the `upload cos` and `download cos`
+After installing the plug-in you will be able to use the `upload cos`, `show cos`, and `download cos`
 commands on `backwork`.
+
+### `backwork upload cos`
 
 ```sh
 $ backwork upload cos --help
@@ -41,6 +43,53 @@ optional arguments:
   -p SECRET_KEY, --secret-key SECRET_KEY
                         secret access key of HMAC credentials
 ```
+
+### `backwork show cos`
+
+list backups
+```sh
+usage: backwork show cos [-h] [-e ENDPOINT_URL] [-s INSTANCE_ID]
+                         [-u ACCESS_KEY] [-p SECRET_KEY] [-l LIMIT]
+                         [--sort-last-modified]
+                         bucket path
+
+List available backups in Cloud Object Storage.
+
+positional arguments:
+  bucket                target s3 bucket
+  path                  Path/prefix to the look for backups in
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e ENDPOINT_URL, --endpoint-url ENDPOINT_URL
+                        endpoint URL of the S3 storage
+  -s INSTANCE_ID, --instance-id INSTANCE_ID
+                        service instance id
+  -u ACCESS_KEY, --access-key ACCESS_KEY
+                        acccess key id of HMAC credentials
+  -p SECRET_KEY, --secret-key SECRET_KEY
+                        secret access key of HMAC credentials
+  -l LIMIT, --limit LIMIT
+                        max number of results to return
+  --sort-last-modified  if passed, sorts results from most to least recent
+```
+
+A common use case would be to get the name of the most recent backup:
+
+```sh
+backwork show cos \
+  --endpoint-url "${IBM_COS_ENDPOINT_URL}" \
+  --instance-id "${IBM_COS_INSTANCE_ID}" \
+  --access-key "${IBM_COS_ACCESS_KEY}" \
+  --secret-key "${IBM_COS_SECRET_KEY}" \
+  "my-bucket" \
+  "my-path" \
+  --limit 1 \
+  --sort-last-modified \
+  | jq .backups[0]
+```
+
+### `backwork download cos`
 
 ```sh
 $ backwork download cos --help
