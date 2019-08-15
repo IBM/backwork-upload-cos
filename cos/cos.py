@@ -118,10 +118,6 @@ class CloudObjectStorageDownload(object):  # pylint: disable=unused-variable
             endpoint_url=args.endpoint_url,
         )
 
-    def path_leaf(self, path):
-        head, tail = ntpath.split(path)
-        return tail or ntpath.basename(head)
-
     @classmethod
     def parse_args(cls, subparsers):
         """Add Cloud Object Storage arguments to command line parser."""
