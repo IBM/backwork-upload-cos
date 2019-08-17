@@ -158,11 +158,11 @@ class CloudObjectStorageShow(object):  # pylint: disable=unused-variable
 
         if self.args.sort_last_modified:
             def get_backup_name_from_key(obj_key):
-                # remove prefix/path from backup name
-                obj_key = obj_key.split(self.args.path, 1)[-1]
+                # remove prefix/path from key
+                backup_name = obj_key.split(self.args.path, 1)[-1]
                 # # remove leading/trailing /
-                obj_key = obj_key.strip('/')
-                return obj_key
+                backup_name = obj_key.strip('/')
+                return backup_name
 
             def get_last_modified(obj):
                 return int(
