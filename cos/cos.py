@@ -157,22 +157,29 @@ class CloudObjectStorageShow(object):  # pylint: disable=unused-variable
         )["Contents"]
 
         if self.args.sort_last_modified:
+            def get_backup_name_from_key(obj_key):
+                # remove prefix/path from key
+                backup_name = obj_key.split(self.args.path, 1)[-1]
+                # # remove leading/trailing /
+                backup_name = obj_key.strip('/')
+                return backup_name
+
             def get_last_modified(obj):
                 return int(
                     obj['LastModified'].strftime('%s'))
-            backups = [backup['Key']
-                       for backup in sorted(backup_objects, key=get_last_modified, reverse=True)]
 
-        # remove prefix/path from backup name
-        if self.args.path:
-            backups = [backup.split(self.args.path, 1)[-1]
-                       for backup in backups]
-
-        # remove leading/trailing /
-        backups = [backup.strip('/') for backup in backups]
+            backups = [
+                {
+                    'name': get_backup_name_from_key(backup['Key']),
+                    'last_modified': str(backup['LastModified']),
+                    'size': backup['Size']
+                }
+                for backup in sorted(backup_objects, key=get_last_modified, reverse=True)
+            ]
+            print(backups[0].keys())
 
         # remove any results that are empty / just the prefix
-        backups = [backup for backup in backups if backup != ""]
+        backups = [backup for backup in backups if backup['name'] != ""]
 
         # can't use s3 MaxKeys param because we want to sort before we limit
         if self.args.limit:
