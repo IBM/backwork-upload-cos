@@ -12,13 +12,13 @@ with open(path.join(HERE, 'README.md')) as f:
 
 setup(
     name="backwork-upload-cos",
-    version="0.3.0",
+    version="0.3.1",
     description="Backwork plug-in for IBM Cloud Object Storage uploads.",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
     url="https://github.com/IBM/backwork-upload-cos",
-    author="Michael Lin",
-    author_email="michael.lin1@ibm.com",
+    author="Skills Network",
+    author_email="admin@skills.network",
     license="Apache 2",
     classifiers=[
         "Development Status :: 3 - Alpha",
